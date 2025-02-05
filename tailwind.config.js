@@ -11,9 +11,20 @@ export default {
     ],
     theme: {
         extend: {
+            boxShadow: {
+                framed: '-50px -50px 0 -40px #FEF08A, 50px 50px 0 -40px #FEF08A',
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                primary: '#CCD6F6',
+                secondary: '#8892B0',
+                jesse: '#FEF08A'
+            },
+            backgroundImage: {
+                'radial-gradient': 'radial-gradient(circle, #002855, #001524)',
+              },
         },
     },
     plugins: [],
