@@ -78,3 +78,8 @@ docker run --rm \
 ```bash
 ./vendor/bin/sail artisan migrate --seed
 ```
+
+10. Run de development server
+```bash
+npm run dev
+```
