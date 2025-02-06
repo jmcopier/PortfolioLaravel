@@ -73,7 +73,7 @@ docker run --rm \
 ./vendor/bin/sail npm i
 ```
 
-9. Migrate een seed de database
+9. Migrate en seed de database
 
 ```bash
 ./vendor/bin/sail artisan migrate --seed
