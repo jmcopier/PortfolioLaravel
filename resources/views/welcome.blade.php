@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Jesse Copier</title>
+    <title>{{ $profile->name }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -33,22 +33,18 @@
         </nav>
         <div class="left-[200px] top-[300px] absolute">
             <p class="font-mono text-[20px] text-jesse">Welkom, mijn naam is</p>
-            <h2 class="font-inter text-[80px] text-primary">Jesse Copier.</h2>
+            <h2 class="font-inter text-[80px] text-primary">{{ $profile->name }}.</h2>
             <h2 class="font-inter text-[70px] text-secondary">Student Software Development.</h2>
         </div>
     </div>
     <!-- About screen -->
-    <div id="About" class="bg-radial-gradient h-screen w-screen flex justify-around items-center px-[200px]">
+    <div id="About" class="bg-radial-gradient h-screen w-screen grid grid-cols-3 grid-rows-2 gap-[150px] p-[200px]">
         <div class="w-[400px]">
             <p class="mb-5 font-inter font-bold text-[32px] text-primary">Over mij</p>
-            <p class="font-inter text-20px text-secondary">Hey! Mijn naam is Jesse Copier, student Software Development
-                op het Koning Willem I College. Op dit moment zit ik in het laatste jaar van mijn opleiding en hoop ik
-                deze dit schooljaar op een goede manier af te ronden.</p>
-            <p class="font-inter text-20px text-secondary pt-[20px]">In mijn vrije tijd vind ik het leuk om films te
-                kijken, boeken te lezen en muziek te luisteren.</p>
+            <p class="font-inter text-20px text-secondary">{{ $profile->about }}</p>
             <div class="flex mt-6 gap-4">
                 <!-- Github -->
-                <a href="https://github.com/jmcopier" target="_blank" class="hover:text-secondary">
+                <a href="{{ $profile->github }}" target="_blank" class="hover:text-secondary">
                     <svg xmlns="http://www.w3.org/2000/svg"
                         class="w-8 h-8 fill-current text-primary hover:text-secondary" viewBox="0 0 496 512">
                         <path
@@ -56,7 +52,7 @@
                     </svg>
                 </a>
                 <!-- LinkedIn -->
-                <a href="https://www.linkedin.com/in/jesse-copier-519b1b273/" target="_blank"
+                <a href="{{ $profile->linkedin }}" target="_blank"
                     class="hover:text-secondary">
                     <svg xmlns="http://www.w3.org/2000/svg"
                         class="w-8 h-8 fill-current text-primary hover:text-secondary" viewBox="0 0 448 512">
@@ -68,35 +64,46 @@
         </div>
         <div class="w-[400px]">
             <p class="mb-5 font-inter font-bold text-[32px] text-primary pt-[20px]">Opleidingen</p>
-            <p class="font-inter text-20px text-primary pt-[20px]">Software Development</p>
-            <p class="font-inter text-20px text-secondary">[2022 - Heden] Koning Willem I College</p>
-            <p class="font-inter text-20px text-primary pt-[20px]">Informatica</p>
-            <p class="font-inter text-20px text-secondary">[2021 - 2022] Avans Hogeschool</p>
-            <p class="font-inter text-20px text-primary pt-[20px]">HAVO</p>
-            <p class="font-inter text-20px text-secondary">[2015 - 2020] Gomarus Scholengemeenschap</p>
+            @foreach ($courses as $course)
+                <p class="font-inter text-20px text-primary pt-[20px]">{{ $course->name }}</p>
+                <p class="font-inter text-20px text-secondary">[{{ $course->period }}] {{ $course->school }}</p>
+            @endforeach
         </div>
-        <div class="w-[400px]">
+        <div class="w-[400px] row-span-2">
             <div class="relative shadow-framed">
                 <img class="grayscale" src="{{ asset('images/portrait.jpg') }}" alt="Portrait of me :)">
             </div>
+        </div>
+        <div class="w-[400px]">
+            <p class="mb-5 font-inter font-bold text-[32px] text-primary pt-[20px]">Werkervaring</p>
+            @foreach ($experiences as $experience)
+                <p class="font-inter text-20px text-primary pt-[20px]"> {{ $experience->function }} </p>
+                <p class="font-inter text-20px text-secondary">[{{ $experience->period }}] {{ $experience->company }}</p>
+            @endforeach
+
+        </div>
+        <div class="w-[400px]">
+            <p class="mb-5 font-inter font-bold text-[32px] text-primary pt-[20px]">Vaardigheden</p>
+            <p class="font-inter text-20px text-primary pt-[20px]">
+                {{ $skills->pluck('name')->implode(', ') }}
+            </p>
         </div>
     </div>
     <!-- Projects screen -->
     <div id="Projects" class="bg-radial-gradient h-screen w-screen">
         <h2 class="text-primary font-bold font-inter text-[32px] pb-[200px] pt-[50px] text-center">Projecten</h2>
         <div class="grid grid-cols-3 gap-10 mx-[100px]">
+            @foreach ($projects as $project)
             <!-- Card -->
             <div
                 class="p-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-lg w-[500px] h-[200px]">
                 <div class="bg-radial-gradient p-6 rounded-lg w-full h-full flex flex-col">
-                    <h3 class="text-xl font-bold text-primary font-inter">Portfolio</h3>
-                    <p class="text-secondary font-inter">De portfolio website waar je nu op zit! Gemaakt met behulp van
-                        het framework
-                        Nuxt en Tailwind CSS.</p>
+                    <h3 class="text-xl font-bold text-primary font-inter">{{ $project->name }}</h3>
+                    <p class="text-secondary font-inter">{{ $project->description }}</p>
                     <div class="flex-grow"></div>
                     <div class="flex justify-between items-center">
                         <a class="text-secondary hover:text-jesse font-inter"
-                            href="https://github.com/jmcopier/Portfolio" target="_blank">
+                            href="{{ $project->github }}" target="_blank">
                             <!-- GitHub SVG Icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"
                                 class="w-6 h-6 inline mr-2 fill-current text-primary hover:text-jesse">
@@ -106,14 +113,14 @@
                         </a>
 
                         <span class="text-sm font-inter">
-                            <span class="text-[#41b883] mr-4">• Vue (Nuxt)</span>
-                            <span class="text-[#f1e05a] mr-4">• Javascript</span>
-                            <span class="text-[#3178c6] mr-4">• TypeScript</span>
-                            <span class="text-[#663399]">• Tailwind CSS</span>
+                            @foreach ($project->software as $software)
+                                <span class="text-secondary mr-4">• {{ $software->name }}</span>
+                            @endforeach
                         </span>
                     </div>
                 </div>
             </div>
+            @endforeach
             <!-- Card -->
             <div
                 class="p-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-lg w-[500px] h-[200px]">
